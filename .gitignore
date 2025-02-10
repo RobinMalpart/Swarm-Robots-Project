@@ -1,0 +1,8 @@
+# Ignorer le dossier compilé de Rust
+target/
+
+# Fichier de verrouillage des dépendances
+Cargo.lock
+
+# Exécutable compilé
+swarm_robots

@@ -1,0 +1,32 @@
+[package]
+name = "swarm_robots"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# 📌 Génération aléatoire (seed, obstacles, placement aléatoire des ressources)
+rand = "0.8"
+
+# 📌 Génération procédurale de la carte avec du Perlin Noise
+noise = "0.8"
+
+# 📌 Sérialisation et désérialisation des données (permet de sauvegarder et charger l'état du jeu en JSON)
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# 📌 Optimisation des calculs en parallèle (utile pour la gestion de plusieurs robots simultanés)
+rayon = "1.7"
+
+# 📌 Programmation asynchrone pour gérer plusieurs tâches en même temps (ex: robots qui explorent indépendamment)
+tokio = { version = "1", features = ["full"] }
+
+# 📌 Communication sécurisée entre les threads (ex: échange de données entre robots et station)
+crossbeam = "0.8"
+
+# 📌 Gestion des logs pour déboguer et suivre les actions des robots
+log = "0.4"
+env_logger = "0.10"
+
+# 📌 Interface utilisateur en terminal pour afficher la carte et la simulation
+ratatui = "0.24"
+crossterm = "0.27"
