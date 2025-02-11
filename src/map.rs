@@ -72,18 +72,44 @@ impl Map {
         }
     }
 
-    /// Places a single scientific base on the map, ensuring it's not on an obstacle.
     fn place_science_base(&mut self) {
         let mut rng = rand::thread_rng();
         loop {
             let x = rng.gen_range(0..self.width);
             let y = rng.gen_range(0..self.height);
 
-            if self.grid[y][x] == '.' {
-                self.grid[y][x] = 'B'; // Base
+            if self.grid[y][x] == '.' && self.is_surrounded_by_terrain(x, y) {
+                self.grid[y][x] = '🏭'; // Base
                 break;
             }
         }
+    }
+
+    /// Checks if the given position is surrounded by normal terrain, including diagonals.
+    fn is_surrounded_by_terrain(&self, x: usize, y: usize) -> bool {
+        let directions = [
+            (0, 1),   // Down
+            (1, 0),   // Right
+            (0, -1),  // Up
+            (-1, 0),  // Left
+            (1, 1),   // Down-Right
+            (1, -1),  // Up-Right
+            (-1, 1),  // Down-Left
+            (-1, -1), // Up-Left
+        ];
+
+        for &(dx, dy) in &directions {
+            let nx = x as isize + dx;
+            let ny = y as isize + dy;
+
+            if nx >= 0 && nx < self.width as isize && ny >= 0 && ny < self.height as isize {
+                if self.grid[ny as usize][nx as usize] != '.' {
+                    return false;
+                }
+            }
+        }
+
+        true
     }
 
     /// Displays the map as ASCII in the terminal.
